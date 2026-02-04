@@ -1,34 +1,3 @@
-# Requisitos para plataforma de streaming
-requisitos_streaming = {
-    "datos_transaccionales": {
-        "suscripciones": "ACID crítico, joins complejos",
-        "pagos": "Consistencia fuerte requerida",
-        "usuarios": "Datos maestros normalizados",
-    },
-    "datos_analiticos": {
-        "eventos_reproduccion": "Volumen masivo, time-series",
-        "recomendaciones": "Relaciones complejas entre usuarios/contenido",
-        "analytics_contenido": "Métricas agregadas variables",
-    },
-    "requisitos_performance": {
-        "latencia_vista": "< 100ms para recomendaciones",
-        "throughput_eventos": "1M eventos/segundo",
-        "almacenamiento": "100PB datos históricos",
-    },
-}
-
-print("REQUISITOS PLATAFORMA DE STREAMING")
-print("=" * 35)
-
-for categoria, detalles in requisitos_streaming.items():
-    print(f"\n{categoria.upper().replace('_', ' ')}:")
-    if isinstance(detalles, dict):
-        for subcat, desc in detalles.items():
-            print(f"  {subcat.title()}: {desc}")
-    else:
-        print(f"  {detalles}")
-# Selección de tecnologías por caso de uso:
-
 # Arquitectura híbrida seleccionada
 arquitectura_hibrida = {
     "postgresql": {
@@ -40,14 +9,8 @@ arquitectura_hibrida = {
     },
     "cassandra": {
         "rol": "Base de datos de eventos y analytics",
-        "casos_uso": [
-            "Eventos de reproducción",
-            "Métricas de usuario",
-            "Logs",
-        ],
-        "justificacion": (
-            "Escalabilidad horizontal masiva, " "writes de alto throughput"
-        ),
+        "casos_uso": ["Eventos de reproducción", "Métricas de usuario", "Logs"],
+        "justificacion": "Escalabilidad horizontal masiva, writes de alto throughput",
         "escalabilidad": "Horizontal ilimitada",
         "limitaciones": "Queries complejas limitadas",
     },
@@ -58,7 +21,7 @@ arquitectura_hibrida = {
             "Análisis de afinidad",
             "Detección de fraude",
         ],
-        "justificacion": ("Queries de relaciones complejas, algoritmos de grafos"),
+        "justificacion": "Queries de relaciones complejas, algoritmos de grafos",
         "escalabilidad": "Hasta ~100B nodos/relaciones",
         "limitaciones": "No optimizado para agregaciones masivas",
     },
@@ -80,7 +43,7 @@ arquitectura_hibrida = {
             "Analytics de catálogo",
             "Logs estructurados",
         ],
-        "justificacion": ("Búsqueda full-text, agregaciones complejas, APIs REST"),
+        "justificacion": "Búsqueda full-text, agregaciones complejas, APIs REST",
         "escalabilidad": "Horizontal con sharding",
         "limitaciones": "No transaccional, eventual consistency",
     },
@@ -88,9 +51,10 @@ arquitectura_hibrida = {
 
 print("ARQUITECTURA HÍBRIDA SELECCIONADA")
 print("=" * 40)
-
 for tecnologia, detalles in arquitectura_hibrida.items():
     print(f"\n{tecnologia.upper()}:")
     print(f" Rol: {detalles['rol']}")
+    print(f" Justificación: {detalles['justificacion']}")
     print(f" Casos de uso: {', '.join(detalles['casos_uso'])}")
     print(f" Escalabilidad: {detalles['escalabilidad']}")
+    print(f" Limitaciones: {detalles['limitaciones']}")
